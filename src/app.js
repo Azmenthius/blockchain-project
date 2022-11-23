@@ -5,15 +5,15 @@ App = {
   load: async () => {
     await App.loadWeb3();
     await App.loadAccount();
-    // await App.loadContract();
-    // await App.render();
+    await App.loadContract();
+    await App.render();
   },
 
   // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
   loadWeb3: async () => {
     if (typeof web3 !== "undefined") {
-      App.web3Provider = web3.currentProvider;
-      web3 = new Web3(web3.currentProvider);
+      App.web3Provider = window.ethereum;
+      web3 = new Web3(window.ethereum);
     } else {
       window.alert("Please connect to Metamask.");
     }
@@ -33,8 +33,8 @@ App = {
     }
     // Legacy dapp browsers...
     else if (window.web3) {
-      App.web3Provider = web3.currentProvider;
-      window.web3 = new Web3(web3.currentProvider);
+      App.web3Provider = window.ethereum;
+      window.web3 = new Web3(window.ethereum);
       // Acccounts always exposed
       web3.eth.sendTransaction({
         /* ... */
@@ -54,38 +54,49 @@ App = {
     const web3Instance = new Web3(ethereum);
     const account = await web3Instance.eth.getAccounts();
     const accountAddress = await account[0];
-    App.address = accountAddress;
-    console.log(App.address);
+    App.account = accountAddress;
   },
 
-  //   loadContract: async () => {
-  //     // Create a JavaScript version of the smart contract
-  //     const todoList = await $.getJSON("TodoList.json");
-  //     App.contracts.TodoList = TruffleContract(todoList);
-  //     App.contracts.TodoList.setProvider(App.web3Provider);
+  loadContract: async () => {
+    // Create a JavaScript version of the smart contract
+    // creating truffle contract from smart contract json file
 
-  //     // Hydrate the smart contract with values from the blockchain
-  //     App.todoList = await App.contracts.TodoList.deployed();
-  //   },
+    const main = await $.getJSON("main.json");
+    App.contracts.main = TruffleContract(main);
+    App.contracts.main.setProvider(App.web3Provider);
 
-  //   render: async () => {
-  //     // Prevent double render
-  //     if (App.loading) {
-  //       return;
-  //     }
+    // Hydrate the smart contract with values from the blockchain
+    App.main = await App.contracts.main.deployed();
+  },
 
-  //     // Update app loading state
-  //     App.setLoading(true);
+  render: async () => {
+    // Prevent double render
+    if (App.loading) {
+      return;
+    }
 
-  //     // Render Account
-  //     $("#account").html(App.account);
+    //update app loading state
+    App.setLoading(true);
 
-  //     // Render Tasks
-  //     await App.renderTasks();
+    // Render Account
+    $("#account").html(App.account);
 
-  //     // Update loading state
-  //     App.setLoading(false);
-  //   },
+    // Update app loading state
+    App.setLoading(true);
+  },
+
+  setLoading: (boolean) => {
+    App.loading = boolean;
+    const loader = $("#loader");
+    const content = $("#content");
+    if (boolean) {
+      loader.show();
+      content.hide();
+    } else {
+      loader.hide();
+      content.show();
+    }
+  },
 
   //   renderTasks: async () => {
   //     // Load the total task count from the blockchain
@@ -121,12 +132,25 @@ App = {
   //     }
   //   },
 
-  //   createTask: async () => {
-  //     App.setLoading(true);
-  //     const content = $("#newTask").val();
-  //     await App.todoList.createTask(content);
-  //     window.location.reload();
-  //   },
+  createUser: async () => {
+    App.setLoading(true);
+    const name = $("#name").val();
+    const email = $("#email").val();
+    const phone = $("#phone").val();
+    const aadharnumber = $("#aadharnumber").val();
+    const gender = $("input[type='radio'][name='genderopt']:checked").val();
+    const inputAddress = $("#inputAddress").val();
+    await App.main.addUser(
+      name,
+      email,
+      phone,
+      aadharnumber,
+      gender,
+      inputAddress,
+      { from: App.account }
+    );
+    window.location.reload();
+  },
 
   //   toggleCompleted: async (e) => {
   //     App.setLoading(true);

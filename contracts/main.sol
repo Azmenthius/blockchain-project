@@ -15,10 +15,20 @@ contract main {
     }
 
     mapping (uint => user) public users;
+
+    event userCreated(
+        string name,
+        string email,
+        uint phone,
+        uint aadhar,
+        string gender,
+        string useraddress
+    );
     
     function addUser(string memory _name, string memory _email, uint  _phone,
                         uint  _aadhar,string memory _gender,string memory _useraddress) public{
         userCount++;
         users[userCount] = user(_name,_email,_phone,_aadhar,_gender,_useraddress); 
+        emit userCreated(_name, _email, _phone, _aadhar, _gender, _useraddress);
     }
 }

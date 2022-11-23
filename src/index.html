@@ -118,7 +118,7 @@
                   </style>
 
                   <div class="modal-body">
-                    <form action="">
+                    <form onsubmit="App.createUser(); return false;">
                       <div class="mb-3">
                         <label for="email" class="form-label">Name:</label>
                         <input
@@ -173,7 +173,7 @@
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
+                            name="genderopt"
                             id="male"
                             value="male"
                           />
@@ -185,7 +185,7 @@
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
+                            name="genderopt"
                             id="female"
                             value="female"
                           />
@@ -197,7 +197,7 @@
                           <input
                             class="form-check-input"
                             type="radio"
-                            name="inlineRadioOptions"
+                            name="genderopt"
                             id="others"
                             value="others"
                           />
@@ -414,6 +414,7 @@
               />
               Made with <i class="icon ion-heart" style="color: #e25555"></i>
             </p>
+            <span id="account"></span>
           </div>
         </div>
       </div>
@@ -451,6 +452,7 @@
     <script src="assets/ytplayer/index.js"></script>
     <script src="assets/theme/js/script.js"></script>
     <script src="assets/formoid/formoid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.5/dist/truffle-contract.js"></script>
     <script src="app.js"></script>
   </body>
 </html>
