@@ -126,9 +126,6 @@ App = {
     window.location.reload();
   },
 
-  // temp code
-  // _______________
-
   getUser: async (caNumber, units) => {
     // fetch the user data from users
     // console.log(caNumber);
@@ -136,13 +133,13 @@ App = {
     // console.log(userInfo);
 
     if (userInfo["name"] == "") {
-      console.log("No result found!");
+      // console.log("No result found!");
       document.getElementById("noResultMsg").style.display = "block";
     } else {
       document.getElementById("mycontainer").style.display = "block";
 
       document.getElementById("noResultMsg").style.display = "none";
-      console.log("result found for user1");
+      // console.log("result found for user1");
       // getting result
 
       const userName = userInfo["name"];
@@ -177,15 +174,31 @@ App = {
 
       $("#unitsCount").html(units);
 
-      var charges = units * 6.95;
-      $("#energyCharges").html(charges);
+      var energyCharges = units * 7;
+      $("#energyCharges").html(energyCharges);
 
-      $("#additionalCharges").html(22);
+      var additionalCharges = 22;
+      $("#additionalCharges").html(additionalCharges);
 
-      var netBill = charges + 22;
+      var netBill = energyCharges + additionalCharges;
       $("#netBill").html(netBill);
+
+      // adding generated bill to blockchain
+
+      await App.main.addBill(
+        caNumber,
+        billNumber,
+        currentDate,
+        time,
+        userName,
+        units,
+        energyCharges,
+        additionalCharges,
+        netBill,
+        { from: App.account }
+      );
     }
-    console.log(userInfo);
+    // console.log(userInfo);
   },
 };
 

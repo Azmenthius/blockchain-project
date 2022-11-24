@@ -1,0 +1,19 @@
+.table {
+  margin: 0 auto;
+  width: 40%;
+}
+td {
+  text-align: center;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+.nextcontainer {
+  margin: 0 auto;
+  width: 40%;
+  border: 1px solid #e0e4e8;
+}
+#printButton {
+  display: none;
+}

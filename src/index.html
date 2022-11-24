@@ -69,7 +69,7 @@
       class="header5 cid-tnQqlTKGW2 mbr-fullscreen"
       id="header5-4"
     >
-      <div class="container">
+      <div class="container">   
         <div class="row justify-content-end">
           <div class="col-12 col-lg-7">
             <h1
@@ -264,7 +264,7 @@
           </div>
           <div class="col-lg-8 mx-auto mbr-form">
             <!-- form start -->
-            <form
+            <form id = "myForm"
               onsubmit="App.getUser(document.getElementById('canumberid').value,document.getElementById('unitsid').value); return false;"
             >
               <div class="row">
@@ -289,7 +289,7 @@
                   />
                 </div>
                 <div class="col">
-                  <button class="btn btn-warning">Submit</button>
+                  <button class="btn btn-warning">Search</button>
                 </div>
               </div>
             </form>
@@ -395,79 +395,16 @@
             <td>&#8377  <span id="netBill"></span></td>
           </tr>
         </tbody>
-      </table>
+      </table>  
+      <!-- print Button -->
+      <div class=" d-grid gap-2 d-md-flex justify-content-center" id="printButton">
+        <br>
+        <button onclick="PrintElem('mycontainer') & App.generateBill()" class="btn btn-warning" type="button">Print</button>
+        <button onclick="getElementById('mycontainer').style.display = 'none'" class="btn btn-info" type="button">Search Again</button>
+      </div>
     </div>
     <!--  -->
-    <section
-      data-bs-version="5.1"
-      class="features19 cid-tnQu2fMqX8"
-      id="features20-5"
-    >
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-md-12 col-lg-9">
-            <div class="card-wrapper pb-4">
-              <div class="card-box align-center">
-                <h4 class="card-title mbr-fonts-style mb-4 display-2">
-                  <strong>Steps</strong>
-                </h4>
-                <p class="mbr-text mbr-fonts-style mb-4 display-7">
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia ipsa quaerat vel pariatur at quis obcaecati itaque dolores minima porro, officiis dolore omnis nostrum repellendus amet fugiat sed quam dolor.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-12 col-md-8">
-            <div class="item mbr-flex">
-              <div class="icon-box">
-                <span class="step-number mbr-fonts-style display-5">1</span>
-              </div>
-              <div class="text-box">
-                <h4
-                  class="icon-title card-title mbr-black mbr-fonts-style display-7"
-                >
-                  <strong>Specification</strong>
-                </h4>
-                <h5 class="icon-text mbr-black mbr-fonts-style display-4">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam magnam vel, 
-                  sunt, et sint ipsam minus dolorum tempora harum, ex mollitia provident. A id autem hic, soluta vel ipsum at!
-                </h5>
-              </div>
-            </div>
-            <div class="item mbr-flex">
-              <div class="icon-box">
-                <span class="step-number mbr-fonts-style display-5">2</span>
-              </div>
-              <div class="text-box">
-                <h4
-                  class="icon-title card-title mbr-black mbr-fonts-style display-7"
-                >
-                  <strong>Project Planning</strong>
-                </h4>
-                <h5 class="icon-text mbr-black mbr-fonts-style display-4">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos velit assumenda perspiciatis at dolor tenetur cupiditate eos iste earum. Quas at in suscipit nisi deleniti quibusdam provident ut aspernatur non!
-                </h5>
-              </div>
-            </div>
-            <div class="item mbr-flex last">
-              <div class="icon-box">
-                <span class="step-number mbr-fonts-style display-5">3</span>
-              </div>
-              <div class="text-box">
-                <h4
-                  class="icon-title card-title mbr-black mbr-fonts-style display-7"
-                >
-                  <strong>Deployment</strong>
-                </h4>
-                <h5 class="icon-text mbr-black mbr-fonts-style display-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos soluta eos consequatur alias qui eligendi mollitia pariatur. Sequi officiis nulla, architecto sed eius reprehenderit, eligendi ipsam enim ducimus modi magnam.
-                </h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
+  
     <section
       data-bs-version="5.1"
       class="footer7 cid-tnQu3SWSat"
@@ -524,5 +461,6 @@
     <script src="assets/theme/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.5/dist/truffle-contract.js"></script>
     <script src="app.js"></script>
+    <script src="assets/print.js"></script>
   </body>
 </html>
