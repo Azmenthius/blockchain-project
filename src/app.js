@@ -98,39 +98,13 @@ App = {
     }
   },
 
-  //   renderTasks: async () => {
-  //     // Load the total task count from the blockchain
-  //     const taskCount = await App.todoList.taskCount();
-  //     const $taskTemplate = $(".taskTemplate");
-
-  //     // Render out each task with a new task template
-  //     for (var i = 1; i <= taskCount; i++) {
-  //       // Fetch the task data from the blockchain
-  //       const task = await App.todoList.tasks(i);
-  //       const taskId = task[0].toNumber();
-  //       const taskContent = task[1];
-  //       const taskCompleted = task[2];
-
-  //       // Create the html for the task
-  //       const $newTaskTemplate = $taskTemplate.clone();
-  //       $newTaskTemplate.find(".content").html(taskContent);
-  //       $newTaskTemplate
-  //         .find("input")
-  //         .prop("name", taskId)
-  //         .prop("checked", taskCompleted)
-  //         .on("click", App.toggleCompleted);
-
-  //       // Put the task in the correct list
-  //       if (taskCompleted) {
-  //         $("#completedTaskList").append($newTaskTemplate);
-  //       } else {
-  //         $("#taskList").append($newTaskTemplate);
-  //       }
-
-  //       // Show the task
-  //       $newTaskTemplate.show();
-  //     }
-  //   },
+  getCAnum: async () => {
+    var caNum = await App.main.userCount();
+    caNum = caNum.toNumber();
+    // console.log(caNum);
+    // Render Account
+    $("#canum").html(caNum + 1);
+  },
 
   createUser: async () => {
     App.setLoading(true);
@@ -152,25 +126,67 @@ App = {
     window.location.reload();
   },
 
-  //   toggleCompleted: async (e) => {
-  //     App.setLoading(true);
-  //     const taskId = e.target.name;
-  //     await App.todoList.toggleCompleted(taskId);
-  //     window.location.reload();
-  //   },
+  // temp code
+  // _______________
 
-  //   setLoading: (boolean) => {
-  //     App.loading = boolean;
-  //     const loader = $("#loader");
-  //     const content = $("#content");
-  //     if (boolean) {
-  //       loader.show();
-  //       content.hide();
-  //     } else {
-  //       loader.hide();
-  //       content.show();
-  //     }
-  //   },
+  getUser: async (caNumber, units) => {
+    // fetch the user data from users
+    // console.log(caNumber);
+    const userInfo = await App.main.users(caNumber);
+    // console.log(userInfo);
+
+    if (userInfo["name"] == "") {
+      console.log("No result found!");
+      document.getElementById("noResultMsg").style.display = "block";
+    } else {
+      document.getElementById("mycontainer").style.display = "block";
+
+      document.getElementById("noResultMsg").style.display = "none";
+      console.log("result found for user1");
+      // getting result
+
+      const userName = userInfo["name"];
+      // const email = userInfo["email"];
+      const phone = userInfo["phone"].toNumber();
+      const aadhar = userInfo["aadhar"].toNumber();
+      // const gender = userInfo["gender"];
+      const useraddress = userInfo["useraddress"];
+
+      // console.log(userName);
+      // console.log(email);
+      // console.log(phone);
+      // console.log(aadhar);
+      // console.log(gender);
+      // console.log(useraddress);
+      // Render table
+      let billNumber = Math.floor(Math.random() * 100000 + 100);
+
+      $("#caNumber").html(caNumber);
+      $("#billNo").html(billNumber);
+
+      var currentDate = new Date().toLocaleDateString();
+      $("#date").html(currentDate);
+
+      let time = new Date().toLocaleTimeString();
+      $("#time").html(time);
+
+      $("#username").html(userName);
+      $("#phoneNum").html(phone);
+      $("#aadharNumber").html(aadhar);
+      $("#address").html(useraddress);
+
+      $("#unitsCount").html(units);
+
+      var charges = units * 6.95;
+      $("#energyCharges").html(charges);
+
+      $("#additionalCharges").html(22);
+
+      var netBill = charges + 22;
+      $("#netBill").html(netBill);
+    }
+    console.log(userInfo);
+  },
 };
 
 $(() => {

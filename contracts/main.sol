@@ -4,6 +4,7 @@ pragma solidity >=0.4.16 <0.9.0;
 
 contract main {
     uint public userCount = 100000;
+    uint public billNo = 100;
 
     struct user{
         string name;

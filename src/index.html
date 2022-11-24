@@ -85,23 +85,33 @@
             </p>
             <div class="mbr-section-btn mt-3">
               <a class="btn btn-warning display-7" href="index.html#form2-3"
-                >Find bill by Consumer Number!</a
+                >Generate bill by Consumer Number!</a
               >
               <button
                 class="btn btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#myModal"
+                onclick="App.getCAnum();"
               >
                 New user? Registration
               </button>
             </div>
             <!-- my code for popup form -->
+            <style>
+              .caNumDis {
+                display: inline-block;
+                margin-left: 40px;
+              }
+            </style>
             <div class="modal fade" id="myModal">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <!-- Modal Header -->
                   <div class="modal-header">
                     <h4 class="modal-title">Registraion</h4>
+                    <span class="caNumDis"
+                      >Your CA number: <span id="canum"></span
+                    ></span>
                     <button
                       type="button"
                       class="btn-close"
@@ -122,7 +132,7 @@
                       <div class="mb-3">
                         <label for="email" class="form-label">Name:</label>
                         <input
-                          type="Name"
+                          type="text"
                           class="form-control"
                           id="name"
                           placeholder="Enter name"
@@ -146,7 +156,7 @@
                           >Mobile Number:</label
                         >
                         <input
-                          type="tel"
+                          type="text"
                           class="form-control"
                           id="phone"
                           placeholder="Enter mobile number"
@@ -159,7 +169,7 @@
                           >Aadhar Number:</label
                         >
                         <input
-                          type="tel"
+                          type="text"
                           class="form-control"
                           id="aadharnumber"
                           placeholder="Enter Aadhar number"
@@ -176,6 +186,7 @@
                             name="genderopt"
                             id="male"
                             value="male"
+                            required
                           />
                           <label class="form-check-label" for="male"
                             >Male</label
@@ -213,6 +224,7 @@
                           class="form-control"
                           id="inputAddress"
                           placeholder="Enter Address"
+                          required
                         />
                       </div>
 
@@ -223,6 +235,7 @@
                   </div>
 
                   <!-- Modal footer -->
+
                   <div class="modal-footer">
                     <button
                       type="button"
@@ -241,86 +254,150 @@
         </div>
       </div>
     </section>
-
     <section data-bs-version="5.1" class="form2 cid-tnQpOt2Vb3" id="form2-3">
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
+          <div class="card-box align-center">
+            <h3 class="card-title mbr-fonts-style mb-4 display-2">
+              <strong>Generate bill</strong>
+            </h3>
+          </div>
+          <div class="col-lg-8 mx-auto mbr-form">
+            <!-- form start -->
             <form
-              action=""
-              method=""
-              class="mbr-form form-with-styler"
-              data-form-title="Form Name"
+              onsubmit="App.getUser(document.getElementById('canumberid').value,document.getElementById('unitsid').value); return false;"
             >
-              <input
-                type="hidden"
-                name="email"
-                data-form-email="true"
-                value=""
-              />
               <div class="row">
-                <div
-                  hidden="hidden"
-                  data-form-alert=""
-                  class="alert alert-success col-12"
-                >
-                  Thanks for filling out the form!
-                </div>
-                <div
-                  hidden="hidden"
-                  data-form-alert-danger=""
-                  class="alert alert-danger col-12"
-                >
-                  Oops...! some problem!
-                </div>
-              </div>
-              <div class="dragArea row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                  <h1
-                    class="mbr-section-title mb-4 align-center mbr-fonts-style display-2"
-                  >
-                    <strong>Find Bill</strong>
-                  </h1>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12"></div>
-                <div
-                  class="col-lg col-md col-12 form-group mb-3"
-                  data-for="email"
-                >
+                <div class="col">
                   <input
-                    type="text"
-                    name="name"
-                    placeholder="Consumer Number"
-                    data-form-field="name"
+                    type="number"
                     class="form-control"
-                    id="name-form2-3"
+                    placeholder="Enter CA number"
+                    name="canumber"
+                    id="canumberid"
+                    required
                   />
                 </div>
-                <div
-                  class="col-lg col-md col-12 form-group mb-3"
-                  data-for="email"
-                >
+                <div class="col">
                   <input
-                    type="email"
-                    name="email"
-                    placeholder="Number of units"
-                    data-form-field="email"
+                    type="number"
                     class="form-control"
-                    id="email-form2-3"
+                    placeholder="Enter units"
+                    name="units"
+                    id="unitsid"
+                    required
                   />
                 </div>
-                <div class="mbr-section-btn col-md-auto col">
-                  <button type="submit" class="btn btn-warning display-4">
-                    Search
-                  </button>
+                <div class="col">
+                  <button class="btn btn-warning">Submit</button>
                 </div>
               </div>
             </form>
+            <!-- form end -->
           </div>
         </div>
       </div>
     </section>
 
+    <!-- result statue -->
+
+    <div
+      class="alert alert-danger"
+      id="noResultMsg"
+      role="alert"
+      style="display: none"
+    >
+      No result found!!
+    </div>
+
+    <!--  -->
+    <!-- div to show bill -->
+    <style>
+      .table {
+        margin: 0 auto;
+        width: 40%;
+      }
+      td {
+        text-align: center;
+      }
+      #mycontainer {
+        display: none;
+      }
+      .nav-logo {
+        display: flex;
+        align-items: center;
+      }
+      .nextcontainer {
+        margin: 0 auto;
+        width: 40%;
+        border: 1px solid #e0e4e8;
+      }
+    </style>
+    <div id="mycontainer">
+      <div
+        class="nextcontainer"
+        style="display: flex; justify-content: center; align-items: center"
+      >
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="nav-logo">
+          <span> <img src="assets/img.png" height="200" alt="logo" /> </span>
+          <h3>Smart Electricity Bill</h3>
+        </div>
+      </div>
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td>CA Number:</td>
+            <td id="caNumber"></td>
+          </tr>
+          <tr>
+            <td>Bill Number:</td>
+            <td id="billNo"></td>
+          </tr>
+          <tr>
+            <td>Bill Date:</td>
+            <td id="date"></td>
+          </tr>
+          <tr>
+            <td>Bill Time:</td>
+            <td id="time"></td>
+          </tr>
+          <tr>
+            <td>Name:</td>
+            <td id="username"></td>
+          </tr>
+          <tr>
+            <td>Aadhar Number:</td>
+            <td id="aadharNumber"></td>
+          </tr>
+          <tr>
+            <td>Phone Number:</td>
+            <td id="phoneNum"></td>
+          </tr>
+          <tr>
+            <td>Address:</td>
+            <td id="address"></td>
+          </tr>
+          <tr>
+            <td><strong>Units:</strong></td>
+            <td id="unitsCount"></td>
+          </tr>
+          <tr>
+            <td>Energy Charges:</td>
+            <td>&#8377 <span id="energyCharges"></span></td>
+          </tr>
+          <tr>
+            <td>Additional Charges:</td>
+            <td>&#8377 <span id="additionalCharges"></span></td>
+          </tr>
+          <tr>
+            <td><strong>Net Bill Amount:</strong></td>
+            <td>&#8377  <span id="netBill"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--  -->
     <section
       data-bs-version="5.1"
       class="features19 cid-tnQu2fMqX8"
@@ -335,10 +412,7 @@
                   <strong>Steps</strong>
                 </h4>
                 <p class="mbr-text mbr-fonts-style mb-4 display-7">
-                  Mobirise is a free offline app for Windows and Mac to easily
-                  create small/medium websites, landing pages, online resumes
-                  and portfolios. 2500+ beautiful website blocks, templates and
-                  themes help you to start easily.
+                  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia ipsa quaerat vel pariatur at quis obcaecati itaque dolores minima porro, officiis dolore omnis nostrum repellendus amet fugiat sed quam dolor.
                 </p>
               </div>
             </div>
@@ -355,8 +429,8 @@
                   <strong>Specification</strong>
                 </h4>
                 <h5 class="icon-text mbr-black mbr-fonts-style display-4">
-                  Mobirise is perfect for non-techies who are not familiar with
-                  the intricacies of web development.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam magnam vel, 
+                  sunt, et sint ipsam minus dolorum tempora harum, ex mollitia provident. A id autem hic, soluta vel ipsum at!
                 </h5>
               </div>
             </div>
@@ -371,8 +445,7 @@
                   <strong>Project Planning</strong>
                 </h4>
                 <h5 class="icon-text mbr-black mbr-fonts-style display-4">
-                  Mobirise is perfect for non-techies who are not familiar with
-                  the intricacies of web development.
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quos velit assumenda perspiciatis at dolor tenetur cupiditate eos iste earum. Quas at in suscipit nisi deleniti quibusdam provident ut aspernatur non!
                 </h5>
               </div>
             </div>
@@ -386,9 +459,7 @@
                 >
                   <strong>Deployment</strong>
                 </h4>
-                <h5 class="icon-text mbr-black mbr-fonts-style display-4">
-                  Mobirise is perfect for non-techies who are not familiar with
-                  the intricacies of web development.
+                <h5 class="icon-text mbr-black mbr-fonts-style display-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos soluta eos consequatur alias qui eligendi mollitia pariatur. Sequi officiis nulla, architecto sed eius reprehenderit, eligendi ipsam enim ducimus modi magnam.
                 </h5>
               </div>
             </div>
@@ -451,7 +522,6 @@
     <script src="assets/smoothscroll/smooth-scroll.js"></script>
     <script src="assets/ytplayer/index.js"></script>
     <script src="assets/theme/js/script.js"></script>
-    <script src="assets/formoid/formoid.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@truffle/contract@4.3.5/dist/truffle-contract.js"></script>
     <script src="app.js"></script>
   </body>
