@@ -91,27 +91,25 @@
                 class="btn btn-warning"
                 data-bs-toggle="modal"
                 data-bs-target="#myModal"
-                onclick="App.getCAnum();"
               >
                 New user? Registration
               </button>
             </div>
             <!-- my code for popup form -->
-            <style>
+            <!-- <style>
               .caNumDis {
                 display: inline-block;
                 margin-left: 40px;
+                display: none;
               }
-            </style>
+            </style> -->
             <div class="modal fade" id="myModal">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <!-- Modal Header -->
                   <div class="modal-header">
                     <h4 class="modal-title">Registraion</h4>
-                    <span class="caNumDis"
-                      >Your CA number: <span id="canum"></span
-                    ></span>
+        
                     <button
                       type="button"
                       class="btn-close"
@@ -231,7 +229,14 @@
                       <button type="submit" class="btn btn-primary">
                         Submit
                       </button>
+                      <div id = "caNumDis" style="float: right; display: none;">
+                        <span>
+                          Your CA number is <span id="canum"></span>
+                        </span><br>
+                        <div  style="float: right;"> You may Close now!</div>
+                      </div>
                     </form>
+      
                   </div>
 
                   <!-- Modal footer -->
@@ -241,6 +246,7 @@
                       type="button"
                       class="btn btn-danger"
                       data-bs-dismiss="modal"
+                      onclick="window.location.reload()"
                     >
                       Close
                     </button>
@@ -400,7 +406,7 @@
       <div class=" d-grid gap-2 d-md-flex justify-content-center" id="printButton">
         <br>
         <button onclick="PrintElem('mycontainer') & App.generateBill()" class="btn btn-warning" type="button">Print</button>
-        <button onclick="getElementById('mycontainer').style.display = 'none'" class="btn btn-info" type="button">Search Again</button>
+        <button onclick="getElementById('mycontainer').style.display = 'none' & window.location.reload();" class="btn btn-info" type="button">Search Again</button>
       </div>
     </div>
     <!--  -->
