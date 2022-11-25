@@ -132,6 +132,8 @@ App = {
     const userInfo = await App.main.users(caNumber);
     // console.log(userInfo);
 
+    document.getElementById("mycontainer").style.display = "none"; //hiding warning
+    
     if (userInfo["name"] == "") {
       // console.log("No result found!");
       document.getElementById("noResultMsg").style.display = "block";
