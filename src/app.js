@@ -103,7 +103,7 @@ App = {
     caNum = caNum.toNumber();
     // console.log(caNum);
     // Render Account
-    $("#canum").html(caNum + 1);
+    // $("#canum").html(caNum + 1);
   },
 
   createUser: async () => {
@@ -123,7 +123,11 @@ App = {
       inputAddress,
       { from: App.account }
     );
-    window.location.reload();
+    var caNum = await App.main.userCount();
+    caNum = caNum.toNumber();
+    document.getElementById("caNumDis").style.display = "block";
+    $("#canum").html(caNum);
+    // window.location.reload();
   },
 
   getUser: async (caNumber, units) => {
@@ -131,6 +135,7 @@ App = {
     // console.log(caNumber);
     const userInfo = await App.main.users(caNumber);
     // console.log(userInfo);
+    document.getElementById("mycontainer").style.display = "none";
 
     if (userInfo["name"] == "") {
       // console.log("No result found!");
